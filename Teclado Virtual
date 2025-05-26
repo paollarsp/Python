@@ -44,10 +44,6 @@ botoes_texto = [
 
 ]
 
-
-
-botoes = []
-
 for i in range(len(botoes_texto)):
 
         texto = botoes_texto[i]
@@ -57,8 +53,6 @@ for i in range(len(botoes_texto)):
         botao.grid(row=i//10, column=i%10, padx=5, pady=5)
 
         botao.bind("<Button-1>", add_entry)
-
-        botoes.append(botao)
 
 
 
