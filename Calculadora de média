@@ -1,0 +1,209 @@
+import tkinter as tk
+
+
+
+window = tk.Tk()
+
+window.geometry('300x600+0+0')
+
+window.title("Calculadora Média Ponderada")
+
+
+
+#declaração de variáveis
+
+vetor_label_nota = []
+
+vetor_label_peso = []
+
+vetor_entrada_nota = []
+
+vetor_entrada_peso = []
+
+
+
+def criar_campo_nota():
+
+    global quantidade_notas, vetor_label_nota, vetor_label_peso, vetor_entrada_nota, vetor_entrada_peso
+
+
+
+    try:
+
+        quantidade_notas = int(entrada1.get())
+
+
+
+        botao_notas['state'] = "disabled"
+
+        botao_media['state'] = "normal"
+
+
+
+        for i in range(quantidade_notas):
+
+            label_nota = tk.Label(window, text=f"Nota {i+1} :")
+
+            label_nota.pack()
+
+            entrada_nota = tk.Entry(window)
+
+            entrada_nota.pack()
+
+            
+
+            vetor_label_nota.append(label_nota)
+
+            vetor_entrada_nota.append(entrada_nota)
+
+
+
+            label_peso = tk.Label(window, text=f"Peso da nota {i+1} :")
+
+            label_peso.pack()
+
+            entrada_peso = tk.Entry(window)
+
+            entrada_peso.pack()
+
+
+
+            vetor_label_peso.append(label_peso)
+
+            vetor_entrada_peso.append(entrada_peso)
+
+
+
+    except ValueError:
+
+        msg2.config(text="Entrada inválida! Insira um valor novamente:")
+
+        botao_notas.config(state="normal")
+
+        botao_media.config(state="disabled")
+
+
+
+def calcular():
+
+    global quantidade_notas, vetor_label_nota, vetor_label_peso, vetor_entrada_nota, vetor_entrada_peso
+
+
+
+    try:
+
+        #estado dos botões
+
+        botao_notas['state'] = "normal"
+
+        botao_media['state'] = "disabled"
+
+
+
+        #inicialização de variável
+
+        soma = 0
+
+        soma_peso=0
+
+        qtd = quantidade_notas
+
+
+
+        #calculos
+
+
+
+        for posicao in range(qtd):
+
+            nota = float(vetor_entrada_nota[posicao].get())
+
+            peso = float(vetor_entrada_peso[posicao].get())
+
+            soma += nota * peso
+
+            soma_peso += peso
+
+
+
+        resultado = soma/soma_peso
+
+
+
+        #resultado
+
+        msg2['text'] = "Média Ponderada: " + str(resultado)
+
+
+
+        # Limpa os campos depois do cálculo
+
+        for label in vetor_label_nota:
+
+            label.destroy()
+
+        for entrada in vetor_entrada_nota:
+
+            entrada.destroy()
+
+
+
+        vetor_label_nota.clear()
+
+        vetor_entrada_nota.clear()
+
+
+
+        for label in vetor_label_peso:
+
+            label.destroy()
+
+        for entrada in vetor_entrada_peso:
+
+            entrada.destroy()
+
+
+
+        vetor_label_peso.clear()
+
+        vetor_entrada_peso.clear()
+
+
+
+    except ValueError:
+
+        msg2.config(text="Entrada inválida! Insira um valor novamente:")
+
+        botao_notas['state'] = "disabled"
+
+        botao_media['state'] = "normal"
+
+
+
+#layout dos elementos na página
+
+msg1 = tk.Label(window,text="Digite a quantidade de notas:")
+
+entrada1 = tk.Entry(window)
+
+botao_notas = tk.Button(window,text="Criar Campos de Notas", command=criar_campo_nota)
+
+botao_media = tk.Button(window,text="Calcular Média", state="disabled", command=calcular)
+
+msg2 = tk.Label(window, text="Resultado", fg="red")
+
+
+
+msg1.pack()
+
+entrada1.pack(pady=5)
+
+botao_notas.pack(pady=5)
+
+botao_media.pack(pady=5)
+
+msg2.pack(pady=5)
+
+
+
+window.mainloop()
